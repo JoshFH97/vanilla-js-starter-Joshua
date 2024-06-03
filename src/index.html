@@ -2,12 +2,29 @@
 <html>
 
 <head>
-	<title>Ejemplo básico</title>
+	<title>To Do List</title>
 	<meta charset="UTF-8" />
+	<link rel="stylesheet" href="/src/styles.css">
 </head>
 
 <body>
-	<h1>La aplicación esta corriendo!</h1>
+	<div class="titulo">
+		<h1>To Do List</h1>	
+	</div>
+	<div class="datos">
+		<div class="adds">
+			<input id="adds" type="text">
+			<button id="agregar" type="submit" >Agregar</button>
+		</div>
+		<div id="medidor" class="medidor">
+			<h2>Tareas Completadas</h2>
+			<input id="contador" class="contador" type="text" value="2">
+		</div>
+		
+	</div>
+	<br>
+	<div id="lista" class="lista"></div>
+
 
 	<script src="./index.js" type="module"></script>
 </body>

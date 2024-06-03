@@ -1,0 +1,38 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.datos {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-around;
+    gap: 400px;
+    position: relative;
+}
+.adds {
+    display: flex;
+    flex-direction: column;
+}
+.medidor{
+    display: flex;
+    flex-direction: row;
+    gap: 50px;
+}
+.contador {
+    border-radius: 100%;
+    width: 100px;
+    height: 100px;
+   background-color: aqua;
+
+}
+.lista {
+    background-color: aliceblue;
+    border-style: solid;
+    width: 1000px;
+    height: 800px;
+    position: relative;
+    
+}
