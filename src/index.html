@@ -2,31 +2,30 @@
 <html>
 
 <head>
-	<title>To Do List</title>
-	<meta charset="UTF-8" />
-	<link rel="stylesheet" href="/src/styles.css">
+    <title>To Do List</title>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" href="/src/styles.css">
 </head>
 
 <body>
-	<div class="titulo">
-		<h1>To Do List</h1>	
-	</div>
-	<div class="datos">
-		<div class="adds">
-			<input id="adds" type="text">
-			<button id="agregar" type="submit" >Agregar</button>
-		</div>
-		<div id="medidor" class="medidor">
-			<h2>Tareas Completadas</h2>
-			<input id="contador" class="contador" type="text" value="2">
-		</div>
-		
-	</div>
-	<br>
-	<div id="lista" class="lista"></div>
 
+    <div class="titulo">
+        <h1>To Do List</h1>
+    </div>
+    <div class="datos">
+        <div class="adds">
+            <input id="ingresoTexto" type="text" placeholder="Ingrese tarea">
+            <button id="agregar" type="submit">Agregar</button>
+        </div>
+        <div id="medidor" class="medidor">
+            <h2>Tareas Completadas</h2>
+            <input id="contador" class="contador" type="text" value="0" readonly>
+        </div>
+    </div>
+    <br>
+    <ul id="lista" class="lista"></ul>
 
-	<script src="./index.js" type="module"></script>
+    <script src="./index.js" type="module"></script>
 </body>
 
 </html>
