@@ -3,13 +3,22 @@ const ingresoTexto = document.getElementById('ingresoTexto');
 const agregar = document.getElementById('agregar');
 const contador = document.getElementById('contador');
 let completedCount = 0;
+import { darDatos } from "./post";
 
 // Función para actualizar el contador
 function updateCounter() {
     contador.value = completedCount;
 }
 
-// Función para obtener datos del servidor
+// Función para agregar ítems a la lista y al servidor
+function annadirLista() {
+    if (ingresoTexto.value === '') {
+        alert('Space is empty');
+        return;
+    }
+    darDatos();
+}
+
 async function obtenerDatos() {
     try {
         contedorAzul.innerHTML = "";
@@ -28,10 +37,10 @@ async function obtenerDatos() {
             let close = document.createElement("SPAN");
             
             
-            close.innerHTML = '🗑️';
             checkBox.type = "checkbox";
             checkBox.checked = tarea.estado;
             p.innerHTML = tarea.nombre;
+            close.innerHTML = '🗑️';
             
             contedorAzul.appendChild(li);
             li.appendChild(checkBox);
@@ -49,11 +58,15 @@ async function obtenerDatos() {
                 }
                 updateCounter();
             });
-
-            checkBox.addEventListener("change", () => {
+            checkBox.addEventListener("click", () => {
                 tarea.estado = checkBox.checked;
                 cambio(tarea);
-                checkBox.checked ? completedCount++ : completedCount--;
+                if(checkBox.checked){
+                    completedCount++
+                }else{
+                    completedCount--
+                }
+                console.log("cajita");
                 updateCounter();
             });
 
@@ -65,49 +78,6 @@ async function obtenerDatos() {
         console.error(error);
     }
 }
-
-// Función para eliminar datos del servidor
-async function vicino(id) {
-    try {
-        await fetch(`http://localhost:3000/api/task/${id}`, {
-            method: 'DELETE',
-        });
-        console.log(`Se eliminó la tarea con id ${id}`);
-        obtenerDatos();
-    } catch (error) {
-        console.error(error);
-    }
-}
-
-// Función para agregar datos al servidor
-async function darDatos() {
-    if (ingresoTexto.value === '' || ingresoTexto.value === null) {
-        alert('Space is empty');
-    } else {
-        try {
-            let tarea = {
-                id: Date.now(),
-                nombre: ingresoTexto.value,
-                estado: false
-            };
-
-            const respuesta = await fetch("http://localhost:3000/api/task", {
-                method: "POST",
-                headers: {
-                    "Content-type": "application/json; charset=UTF-8"
-                },
-                body: JSON.stringify(tarea)
-            });
-            console.log(`Se agregó satisfactoriamente la tarea ${tarea.nombre}`);
-            ingresoTexto.value = '';
-            obtenerDatos();
-        } catch (error) {
-            console.error(error);
-        }
-    }
-}
-
-// Función para actualizar datos en el servidor
 async function cambio(objeto) {
     try {
         await fetch(`http://localhost:3000/api/task/${objeto.id}`, {
@@ -123,16 +93,6 @@ async function cambio(objeto) {
         console.error(error);
     }
 }
-
-// Función para agregar ítems a la lista y al servidor
-function annadirLista() {
-    if (ingresoTexto.value === '') {
-        alert('Space is empty');
-        return;
-    }
-    darDatos();
-}
-
 // Inicializar la obtención de datos al cargar la página
 obtenerDatos();
 
@@ -141,9 +101,13 @@ agregar.addEventListener('click', annadirLista);
 ingresoTexto.addEventListener('keypress', (e) => {
     if (e.key === 'Enter') {
         annadirLista();
-    }
-});
+        }
+        });
+        
+export {obtenerDatos}
 
+
+//**********************************************************************************************************************************************/
 // const agregar = document.getElementById('agregar');
 // const lista = document.getElementById('adds');
 // const adds = document.getElementById('lista');
@@ -212,6 +176,5 @@ ingresoTexto.addEventListener('keypress', (e) => {
 //             }
 //             })
             
-            
-            
+
    
