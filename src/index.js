@@ -3,7 +3,9 @@ const ingresoTexto = document.getElementById('ingresoTexto');
 const agregar = document.getElementById('agregar');
 const contador = document.getElementById('contador');
 let completedCount = 0;
-import { darDatos } from "./post";
+//import { vicino } from "./delete";
+//import { darDatos } from "./post";
+
 
 // Función para actualizar el contador
 function updateCounter() {
@@ -29,6 +31,7 @@ async function obtenerDatos() {
         if (datos.length === 0) {
             console.log('No hay tareas');
         }
+        completedCount = 0;
 
         datos.forEach(tarea => {
             let li = document.createElement("li");
@@ -37,10 +40,10 @@ async function obtenerDatos() {
             let close = document.createElement("SPAN");
             
             
+            close.innerHTML = '🗑️';
             checkBox.type = "checkbox";
             checkBox.checked = tarea.estado;
             p.innerHTML = tarea.nombre;
-            close.innerHTML = '🗑️';
             
             contedorAzul.appendChild(li);
             li.appendChild(checkBox);
@@ -61,19 +64,22 @@ async function obtenerDatos() {
             checkBox.addEventListener("click", () => {
                 tarea.estado = checkBox.checked;
                 cambio(tarea);
-                if(checkBox.checked){
-                    completedCount++
-                }else{
-                    completedCount--
-                }
+                // if(checkBox.checked){
+                //     completedCount++
+                // }else{
+                //     completedCount--
+                // }
                 console.log("cajita");
                 updateCounter();
             });
-
-         
+if (tarea.estado) {
+    completedCount++
+}
+         console.log(tarea.estado)
 
             
         });
+        updateCounter();
     } catch (error) {
         console.error(error);
     }
@@ -105,6 +111,52 @@ ingresoTexto.addEventListener('keypress', (e) => {
         });
         
 export {obtenerDatos}
+
+// POST Función para agregar datos al servidor
+//import { obtenerDatos } from ".";
+async function darDatos() {
+    if (ingresoTexto.value === '' || ingresoTexto.value === null) {
+        alert('Space is empty');
+    } else {
+        try {
+            let tarea = {
+                id: Date.now(),
+                nombre: ingresoTexto.value,
+                estado: false
+            };
+
+            const respuesta = await fetch("http://localhost:3000/api/task", {
+                method: "POST",
+                headers: {
+                    "Content-type": "application/json; charset=UTF-8"
+                },
+                body: JSON.stringify(tarea)
+            });
+            console.log(`Se agregó satisfactoriamente la tarea ${tarea.nombre}`);
+            ingresoTexto.value = '';
+            obtenerDatos();
+            let data = await respuesta.json()
+            console.log(data);
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+export {darDatos}
+// DELETE Función para eliminar datos del servidor
+
+async function vicino(id) {
+    try {
+        await fetch(`http://localhost:3000/api/task/${id}`, {
+            method: 'DELETE',
+        });
+        console.log(`Se eliminó la tarea con id ${id}`);
+        obtenerDatos();
+    } catch (error) {
+        console.error(error);
+    }
+}
+export {vicino}
 
 
 //**********************************************************************************************************************************************/
